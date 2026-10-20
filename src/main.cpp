@@ -7,8 +7,6 @@
 
 //#define SPI_BITBANG
 
-#define LED                 LED_BUILTIN
-
 #ifdef RT_RP2040
     // Pins SPI1
     #define PIN_MISO        12
@@ -17,6 +15,8 @@
     #define PIN_CS          9
 #ifdef RT_PICO
     #define SMPS_PWM        23
+    // Only the Raspberry Pi Pico is known to have an LED here; other RP2040 boards may use GPIO25 for something else
+    #define LED             LED_BUILTIN
 #endif //RT_PICO
 
     #define ADXL_SPI        SPI1
@@ -30,8 +30,9 @@
     #define PIN_SCK         PA5
     #define PIN_CS          PA4
 
+    #define LED             LED_BUILTIN
     #define ADXL_SPI        SPI
-    #define IS_CONNECTED    !CDC_connected()
+    #define IS_CONNECTED    !CDC_connected() // inverted: the Bluepill LED (PC13) is active low
 #endif //RT_BLUEPILL
 
 
@@ -157,7 +158,9 @@ void drain_fifo() {
 }
 
 void setup() {
+#ifdef LED
     pinMode(LED, OUTPUT);
+#endif //LED
 
 #ifdef RT_PICO
     pinMode(SMPS_PWM, OUTPUT);
@@ -201,8 +204,10 @@ void setup() {
 
 void loop() {
     drain_fifo();
+#ifdef LED
     if(IS_CONNECTED)    //Light onboard led when USB serial is connected
         digitalWrite(LED, HIGH);
     else
         digitalWrite(LED, LOW);
+#endif //LED
 }
