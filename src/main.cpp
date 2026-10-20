@@ -8,6 +8,9 @@
 //#define SPI_BITBANG
 
 #ifdef RT_RP2040
+    // Hardware SPI is not tested on RP2040 boards yet; remove this line to try it
+    #define SPI_BITBANG
+
     // Pins SPI1
     #define PIN_MISO        12
     #define PIN_MOSI        11

@@ -46,7 +46,7 @@ pio run -e bluepill_f103c8_boot8k  # Bluepill with an 8 KiB bootloader, upload v
 The firmware:
 
 - Targets RP2040 (`board = pico`) and STM32F103 Bluepill
-- Reads the ADXL345 via hardware SPI (define `SPI_BITBANG` in `src/main.cpp` for bit-banged SPI)
+- Reads the ADXL345 via bit-banged SPI on RP2040 and hardware SPI on the Bluepill (`SPI_BITBANG` in `src/main.cpp`)
 - Streams samples over USB serial at `230400` baud (UI expects the same)
 
 ## Running the UI locally
